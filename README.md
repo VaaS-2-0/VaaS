@@ -87,14 +87,6 @@ https://github.com/alexellis/arkade
 
 curl -sLS https://get.arkade.dev | sh --> WE TOOK OUT SUDO
 
-
-FaaS Deploying Own Function
-faas-cli template store pull node
-faas-cli new --lang node --prefix=DOCKERUSERNAME NAMEOFFILE
-"Manipulate up Handler.js"
-faas-cli up --skip-deploy -f NAMEOFFILE.yml 
-faas-cli deploy -f NAMEOFFILE
-
 How to deploy custom functions:
 kubectl port-forward -n openfaas svc/gateway 30001:8080
 export OPENFAAS_URL=http://127.0.0.1:30001/
@@ -108,7 +100,7 @@ faas-cli up --skip-deploy -f NAMEOFFILE.yml
 faas-cli deploy -f NAMEOFFILE
 
 
-
+https://grafana.com/docs/grafana/latest/
 how to install grafana:
 1) curl -O https://dl.grafana.com/oss/release/grafana-7.1.5.darwin-amd64.tar.gz
 2) tar -xvf myfile.tar -C somedirectory
