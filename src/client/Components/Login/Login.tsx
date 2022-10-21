@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../Store/hooks';
-import { apiRoute } from '../../utils';
+import { apiRoute, githubID, githubRedirect } from '../../utils';
 import { setTitle } from '../../Store/actions';
 import { Put, Post } from '../../Services/index';
 import { IReducers } from '../../Interfaces/IReducers';
@@ -110,14 +110,15 @@ const Login = () => {
       console.log(error);
     }
 
-    
-
   };
 
   const googleFailure = (error: any) => {
     console.log('Google Login failure', error);
   };
 
+  const handleGitButton = () => {
+    window.location.replace(`https://github.com/login/oauth/authorize?client_id=${githubID}&redirect_uri=${githubRedirect}&path=/&scope=user`);
+  }; 
   return (
     <div>
       <Container 
@@ -244,6 +245,7 @@ const Login = () => {
                 backgroundColor: '#3a4a5b', 
                 borderColor: 'white',
               }}
+            onClick={handleGitButton}
           >
             Github Signin
           </Button>

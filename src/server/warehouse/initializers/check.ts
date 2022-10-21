@@ -7,8 +7,10 @@ import { terminal } from '../../services/terminal';
 export default (req: Request, res: Response, next: (param?: unknown) => void): void | Response => {
   terminal(`${req.method} request routed to '${req.baseUrl}${req.url}' from ${req.socket.remoteAddress}`);
   let route = path(req.url);
+  console.log('ROUTE IS: ', route);
   if (Object.keys(req.query).length > 0) {
     route = path(req.url.substring(0, req.url.indexOf('?')));
+    console.log('NOW ROUTE IS : ', route);
   }
   if (req.url.search(':') !== -1) {
     route = path(req.url.substring(0, req.url.indexOf(':')));

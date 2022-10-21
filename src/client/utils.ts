@@ -52,11 +52,13 @@ const functionCost: { [kay: string]: number } = {
   ibmHTTPCharge: 0,
 };
 
-
-
+const githubID = "669e570028ef9cf48e21";
+const githubRedirect = "http://localhost:9000/api/github";
 export {
   apiRoute,
   customFuncBody,
   functionCost,
+  githubID,
+  githubRedirect
 };
 
