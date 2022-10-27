@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import OpenFaaS from "../Modules/OpenFaaS";
 import Visualizer from "../Modules/Visualizer";
 import CustomQuery from "../Modules/CustomQuery";
+import Alert from "../Modules/Alert";
 import Charts from "../Modules/Charts";
 import FunctionCost from "../Modules/FunctionCost";
 import NavBar from "../Home/NavBar";
@@ -18,7 +19,9 @@ import FunctionsIcon from '@mui/icons-material/Functions';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
+import AddAlertIcon from '@mui/icons-material/AddAlert';
 import "./styles.css";
+import { setDefaultResultOrder } from "node:dns";
 
 // needs to be chnaged to redux, under UI reducer ?
 const Module = (props: Modules) => {
@@ -27,11 +30,20 @@ const Module = (props: Modules) => {
   const [faas, setFaaS] = useState(true);
   const [visualizer, setVisualizer] = useState(false);
   const [functionCost, setFunctionCost] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [custom, setCustom] = useState(false);
   const [charts, setCharts] = useState(false);
   const [currentModule, setCurrentModule] = useState("module");
   const [id] = useState(props.id || state[0]);
-  const [style, setStyle] = useState({
+  const [style, setStyle] = useState((props.isDark) ? {
+    color: "#c0c0c0",
+    minHeight: "100%",
+    minWidth: "100%",
+    display: "flex",
+    textAlign: "left",
+    backgroundImage: "linear-gradient(#2f3136, #7f7f7f)",
+    overflow: "auto",
+  } : {
     color: "white",
     minHeight: "100%",
     minWidth: "100%",
@@ -40,8 +52,11 @@ const Module = (props: Modules) => {
     backgroundImage: "linear-gradient(#1f3a4b, #AFAFAF)",
     overflow: "auto",
   });
-  const [buttonStyle, setButtonStyle] = useState({
-    color: "white",
+  const [buttonStyle, setButtonStyle] = useState((props.isDark) ? {
+    color: "#c0c0c0",
+    width: "1px"
+  } : {
+    color: 'white',
     width: "1px"
   });
 
@@ -68,6 +83,7 @@ const Module = (props: Modules) => {
             setCustom(false);
             setFunctionCost(false);
             setCharts(false);
+            setAlert(false);
             break;
           case "visualizer":
             setFaaS(false);
@@ -75,6 +91,7 @@ const Module = (props: Modules) => {
             setCustom(false);
             setFunctionCost(false);
             setCharts(false);
+            setAlert(false);
             break;
           case "custom":
             setFaaS(false);
@@ -82,6 +99,7 @@ const Module = (props: Modules) => {
             setFunctionCost(false);
             setCustom(true);
             setCharts(false);
+            setAlert(false);
             break;
           case "charts":
             setFaaS(false);
@@ -89,14 +107,24 @@ const Module = (props: Modules) => {
             setCustom(false);
             setFunctionCost(false);
             setCharts(true);
+            setAlert(false);
+            break;
+            case "alert":
+            setAlert(true);
+            setFaaS(false);
+            setVisualizer(false);
+            setCustom(false);
+            setCharts(false);
             break;
           case "functionCost":
+            setAlert(false);
             setFaaS(false);
             setVisualizer(false);
             setCustom(false);
             setFunctionCost(true);
             setCharts(false);
             break;
+
         }
       }
     }
@@ -109,6 +137,7 @@ const Module = (props: Modules) => {
     setFunctionCost(false);
     setCustom(false);
     setCharts(false);
+    setAlert(false);
   };
 
   const handleVisualizerButton = () => {
@@ -118,6 +147,7 @@ const Module = (props: Modules) => {
     setCustom(false);
     setFunctionCost(false);
     setCharts(false);
+    setAlert(false);
   };
 
   const handleCustomButton = () => {
@@ -127,6 +157,7 @@ const Module = (props: Modules) => {
     setCurrentModule("custom");
     setFunctionCost(false);
     setCharts(false);
+    setAlert(false);
   };
 
   const handleChartsButton = () => {
@@ -136,7 +167,18 @@ const Module = (props: Modules) => {
     setCharts(true);
     setFunctionCost(false);
     setCurrentModule("charts");
+    setAlert(false);
   };
+
+  const handleAlertButton = () => {
+    setFaaS(false);
+    setCurrentModule("alert");
+    setVisualizer(false);
+    setCustom(false);
+    setCharts(false);
+    setAlert(true);
+  };
+
 
   const handleFunctionCostButton = () => {
     console.log('CLICKED');
@@ -145,6 +187,7 @@ const Module = (props: Modules) => {
     setCustom(false);
     setCharts(false);
     setFunctionCost(true);
+    setAlert(false);
     setCurrentModule("functionCost");
   };
   return (
@@ -259,6 +302,15 @@ const Module = (props: Modules) => {
               <FullscreenIcon />
             </Button>
           }
+          <Button
+            sx={buttonStyle}
+            variant="text"
+            id="basic-button"
+            className="module-button"
+            onClick={handleAlertButton}
+          >
+            <AddAlertIcon /> 
+          </Button>
           {
             !props.nested && 
             <Button
@@ -284,6 +336,7 @@ const Module = (props: Modules) => {
           {
             custom && 
             <CustomQuery 
+              isDark={props.isDark}
               id={id} 
               nested={props.nested} 
             />
@@ -291,6 +344,7 @@ const Module = (props: Modules) => {
           {
             faas && 
             <OpenFaaS 
+              isDark={props.isDark}
               id={id} 
               nested={props.nested} 
             />
@@ -305,6 +359,7 @@ const Module = (props: Modules) => {
           {
             functionCost &&
             <FunctionCost
+            isDark={props.isDark}
             id={id}
             nested={props.nested}
             />
@@ -316,7 +371,13 @@ const Module = (props: Modules) => {
               nested={props.nested} 
             />
           }
-    
+          {
+            alert && 
+            <Alert               
+              id={id} 
+              nested={props.nested} 
+            />
+          }
         </div>
       </Container>
       <Container 
@@ -325,7 +386,6 @@ const Module = (props: Modules) => {
           color: style.color
         }}
       >
-        {id}
       </Container>
       {
         !props.nested && 

@@ -15,7 +15,7 @@ class Api implements IApi {
 
 }
 
-const apiRoute: Api = Object.freeze(new Api("http://localhost:3000"));
+const apiRoute: Api = Object.freeze(new Api("http://localhost:3020"));
 
 
 
@@ -53,9 +53,10 @@ const functionCost: { [kay: string]: number } = {
 };
 
 
+
 export {
   apiRoute,
   customFuncBody,
-  functionCost
+  functionCost,
 };
   

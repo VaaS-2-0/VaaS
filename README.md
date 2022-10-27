@@ -39,7 +39,7 @@ https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-mul
 
 
 
-<b>Installation</b>
+<b>Installation</b> 
 
 1.  Clone this repository onto your local machine
 
@@ -59,7 +59,7 @@ npm install or npm install --legacy-peer-deps
 JWT_ACCESS_SECRET=hello
 JWT_REFRESH_SECRET=hello
 JWT_EXP=400000000
-JWT_GRACE=4000000000
+JWT_GRACE=4000000000np
 
 MONGO_URL=@
 MONGO_PORT=
@@ -67,7 +67,7 @@ MONGO_USERNAME=
 MONGO_PASSWORD=
 MONGO_COLLECTION=
 
-EXPRESS_PORT=3000
+EXPRESS_PORT=3020
 EXPRESS_CONSOLE_LOG=on
 ```
 
